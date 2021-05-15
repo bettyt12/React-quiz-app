@@ -9,6 +9,7 @@ function App() {
   const [currentquestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [clicked, setClicked] = useState(false);
+  const [showScore,setShowscore]=useState(false);
 
   useEffect(() => {}, [currentquestion]);
 
@@ -23,6 +24,7 @@ function App() {
     if (currentquestion < QuestionList.length - 1) {
       setCurrentQuestion(currentquestion + 1);
     }
+    setShowscore(true);
   };
 
 
@@ -40,19 +42,23 @@ function App() {
       </div>
 
       <div className="btns">
-        {/* {console.log(QuestionList[currentquestion].incorrect_answers)} */}
+        {/* {console.log(QuestionList[currentquestion].correct_answer)} */}
         {QuestionList[currentquestion].incorrect_answers.map(
           (answerOption, index) => (
             <button
-              onClick={() => handleCorrectAnswer(answerOption.isCorrect)}
+              onClick={() => handleCorrectAnswer(false)}
               key={index}
             >
               {answerOption}
             </button>
-          )
+            
+          ),
         )}
-         {console.log(QuestionList[currentquestion].incorrect_answers)}
-        {QuestionList[currentquestion].correct_answer.map(
+         <button onClick={() => handleCorrectAnswer(true)}>
+          {QuestionList[currentquestion].correct_answer}
+        </button>
+        
+        {/* {QuestionList[currentquestion].correct_answer.map(
           (answerOption, index) => (
             <button
               onClick={() => handleCorrectAnswer(answerOption.isCorrect)}
@@ -61,12 +67,20 @@ function App() {
               {answerOption}
             </button>
           )
-        )}
-        {/* {QuestionList[currentquestion].correct_answer.map((answerOption)=>(
-                 <button key={uuidv4()} onClick={handleCorrectAnswer(answerOption.isCorrect)}>
-                     {answerOption.correct_answer}</button>
-             ))} */}
+        )} */}
+         
+       
+      </div>
 
+      <div className="result">
+             { clicked ? (<h4>
+                 { handleCorrectAnswer ? "correct" : "not correct"}
+             </h4>): <h6></h6>
+             }
+               
+             
+
+             
       </div>
       <div>
         <button onClick={() => handleNextQuestion()}>Next</button>

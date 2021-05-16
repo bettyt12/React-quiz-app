@@ -11,7 +11,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [clicked, setClicked] = useState(false);
   const [showScore,setShowScore]=useState(false);
-  const [rate,setRate]=useState();
+  const [rate,setRate]=useState(3);
 
   useEffect(() => {}, [currentquestion]);
 
@@ -27,17 +27,16 @@ function App() {
       setCurrentQuestion(currentquestion + 1);
     }
     setShowScore(true);
+    rateValue();
   };
   const rateValue = () => {
-    if (QuestionList[currentquestion].difficulty === "hard") {
-      setRate(3);
-      console.log("tardu")
-    } else if (QuestionList[currentquestion].difficulty === "medium") {
+    if (QuestionList[currentquestion +1].difficulty === "easy") {
+      setRate(1);
+    } else if (QuestionList[currentquestion +1].difficulty === "medium") {
       setRate(2);
-      console.log("rdu");
-
-    } else setRate(1);
-    console.log("du")
+     
+    } else setRate(3);
+   
 
     return rate;
   };
@@ -47,6 +46,7 @@ function App() {
     
 
   return (
+    
     <div className="content">
       <div className="question_stat">
         <h2>
@@ -61,9 +61,10 @@ function App() {
           readOnly value={rate}
        
         />
-      { ()=> rateValue()}
+     
         
         </div>
+       
       </div>
       <div className="question">
         <p>{QuestionList[currentquestion].question}</p>
@@ -85,17 +86,6 @@ function App() {
          <button onClick={() => handleCorrectAnswer(true)}>
           {QuestionList[currentquestion].correct_answer}
         </button>
-        
-        {/* {QuestionList[currentquestion].correct_answer.map(
-          (answerOption, index) => (
-            <button
-              onClick={() => handleCorrectAnswer(answerOption.isCorrect)}
-              key={index}
-            >
-              {answerOption}
-            </button>
-          )
-        )} */}
          
        
       </div>

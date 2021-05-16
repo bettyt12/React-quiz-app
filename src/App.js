@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
-//import Rating from '@material-ui/core/Rating';
-import * as Statusbar from "react-statusbar";
+import  Rating  from '@material-ui/lab/Rating';
+
 import QuestionList from "./QuestionList.json";
+
+import "./App.css";
 
 
 function App() {
@@ -27,15 +28,22 @@ function App() {
     }
     setShowScore(true);
   };
-  // <Rating
-  
-  //         value={QuestionList[currentquestion].difficulty}
-  //         size="small"
-  //         name="rating"
-  //         readOnly="true"
-  //       />
+  const rateValue = () => {
+    if (QuestionList[currentquestion].difficulty === "hard") {
+      setRate(3);
+      console.log("tardu")
+    } else if (QuestionList[currentquestion].difficulty === "medium") {
+      setRate(2);
+      console.log("rdu");
+
+    } else setRate(1);
+    console.log("du")
+
+    return rate;
+  };
+ 
 // Rating star value
-    // 
+    
     
 
   return (
@@ -47,7 +55,13 @@ function App() {
         <p> {QuestionList[currentquestion].category}</p>
       {/* rating */}
       <div>
-     
+         <Rating
+          size="small"
+          name="rating"
+          readOnly value={rate}
+       
+        />
+      { ()=> rateValue()}
         
         </div>
       </div>

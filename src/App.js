@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Rating from "@material-ui/lab/Rating";
-
 import QuestionList from "./QuestionList.json";
-
+import ProgressBar from "./ProgressBar.js";
 import "./App.css";
 
 function App() {
@@ -28,7 +27,6 @@ function App() {
     }
     setShowScore(true);
     rateValue();
-  
   };
 
   // Rating star value
@@ -42,15 +40,24 @@ function App() {
   };
 
   //correct or wrong answer
-  const res = ()=>{
-    if (handleCorrectAnswer){
-      <h4>correct</h4>  
+  const res = () => {
+    if (handleCorrectAnswer) {
+      <h4>correct</h4>;
+    } else {
+      <h4>Sorry</h4>;
     }
-  else {<h4>Sorry</h4>};
-  }
+  };
+  
+
+  //progressbar
+ // const completed = (QuestionList[currentquestion + 1] * 100) / 20;
 
   return (
     <div className="content">
+      {/* progressbar */}
+      <ProgressBar score={(QuestionList[currentquestion + 1]*100) / 20}  />
+    {/* {console.log(setscore={(score*100) / 20)} */}
+     
       <div className="question_stat">
         <h2>
           Question {currentquestion + 1} of {QuestionList.length}
@@ -80,9 +87,9 @@ function App() {
       </div>
 
       <div className="result">
-          <h6> { ()=> handleCorrectAnswer()}</h6>
+        <h6> {() => res()}</h6>
       </div>
-      
+
       <div className="nextbtn">
         <button onClick={() => handleNextQuestion()}>Next Question</button>
       </div>

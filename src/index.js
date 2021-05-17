@@ -2,12 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import ProgressBar from './Progressbar';
+
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <ProgressBar/>
     <App />
   </React.StrictMode>,
   document.getElementById('root')

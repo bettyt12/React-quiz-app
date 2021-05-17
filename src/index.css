@@ -12,23 +12,22 @@ code {
     monospace;
 }
 .content{
- 
+  align-self: auto;
   max-width: 600px;
   margin: 50px 40px;
   padding: 20px;
-  display: inline-block;
+  
 }
 .btns{
   display: flex;
   color: black;
-  align-content: space-between;
-  size: 80px;
-  width: 100%;
+  width: auto;
   height: 100%;
+  justify-content: space-between;
 }
 .btns button{
-  width: 100% ;
- 
+  width: 70% ;
+  
 }
 .nextbtn{
   align-items: center;

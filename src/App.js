@@ -2,31 +2,41 @@ import React, { useState, useEffect } from "react";
 import Rating from "@material-ui/lab/Rating";
 import QuestionList from "./QuestionList.json";
 import ProgressBar from "./ProgressBar.js";
+import LinearProgress from "@material-ui/core/LinearProgress"
 import "./App.css";
 
 function App() {
   const [currentquestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [clicked, setClicked] = useState(false);
-  const [showScore, setShowScore] = useState(false);
   const [rate, setRate] = useState(3);
+  const [res,setRes]=useState("");
+  const [remain,setRemain]=useState(20);
 
   useEffect(() => {}, [currentquestion]);
 
   const handleCorrectAnswer = isCorrect => {
+    setRemain(remain-1)
     if (isCorrect) {
       setScore(score + 1);
-    }
+      setRes("correct!!");
+    }else{
+      setRes("Sorry");
+    }    
     setClicked(true);
-    res();
+  
   };
+
+
   const handleNextQuestion = () => {
+    setRes("");
     setClicked(false);
     if (currentquestion < QuestionList.length - 1) {
       setCurrentQuestion(currentquestion + 1);
     }
-    setShowScore(true);
+    
     rateValue();
+    
   };
 
   // Rating star value
@@ -39,25 +49,25 @@ function App() {
     return rate;
   };
 
-  //correct or wrong answer
-  const res = () => {
-    if (handleCorrectAnswer) {
-      <h4>correct</h4>;
-    } else {
-      <h4>Sorry</h4>;
-    }
-  };
-  
 
-  //progressbar
- // const completed = (QuestionList[currentquestion + 1] * 100) / 20;
+  
+ // progress control
+  const maxval = () => {
+    let max = ((score + remain) * 100) / 20;
+    return max;
+  };
+  const minval = () => {
+    let min = (score * 100) / 20;
+    return min;
+  };
 
   return (
     <div className="content">
       {/* progressbar */}
-      <ProgressBar score={(QuestionList[currentquestion + 1]*100) / 20}  />
-    {/* {console.log(setscore={(score*100) / 20)} */}
-     
+      <LinearProgress variant="determinate" 
+      value={((currentquestion + 1) / (QuestionList.length)) * 100}
+       />
+ 
       <div className="question_stat">
         <h2>
           Question {currentquestion + 1} of {QuestionList.length}
@@ -87,11 +97,16 @@ function App() {
       </div>
 
       <div className="result">
-        <h6> {() => res()}</h6>
+        <h6>{res}</h6>
       </div>
 
       <div className="nextbtn">
         <button onClick={() => handleNextQuestion()}>Next Question</button>
+      </div>
+      <div>
+          <h5>Score : {(score/20) * 100}%</h5>
+          <h5 style={{marginLeft: ""}}> Max score: {maxval()}%</h5>
+      <ProgressBar score={(score/20) * 100} min={minval()} max={maxval()}  />
       </div>
     </div>
   );

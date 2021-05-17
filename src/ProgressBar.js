@@ -16,9 +16,7 @@ const ProgressBar = (score) => {
     const fillerStyles = {
       height: '100%',
       backgroundColor: 'grey',
-     
-      
-      
+  
     }
   
     // const labelStyles = {

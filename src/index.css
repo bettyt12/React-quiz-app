@@ -38,14 +38,17 @@ h4{
   flex-wrap: wrap; 
   justify-content: space-around;
 
+  /* display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem; */
+  
+
 }
 .btns button{
   width: 35%;
   margin: 15px;
 }
-.btns button:nth-child(odd){
-  order: 1;
-}
+
 .answer_btn{
   background-color: green;
   color: black;
@@ -60,4 +63,6 @@ h4{
   display: flex;
   justify-content: space-between;
 }
-
+.green{
+  background-color: rgb(34, 240, 34);
+}

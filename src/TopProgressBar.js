@@ -1,4 +1,7 @@
-const TopProgressBar = (score) => {
+
+
+const TopProgressBar = ({progress}) => {
+ 
     return ( 
         <div style={{
             width: "100%",
@@ -11,10 +14,10 @@ const TopProgressBar = (score) => {
             }}>
       
                   <div style={{
-                    
+                    transition : "width 2s ease",
                     height: '20px',
-                    backgroundColor: 'black',
-                    width: `${score}%`,
+                    backgroundColor: 'gray',
+                    width: `${progress}%`,
                     }}>
                   </div>
         </div>

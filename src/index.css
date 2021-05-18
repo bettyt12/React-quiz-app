@@ -11,25 +11,53 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.content{
-  align-self: auto;
+.page{
   max-width: 600px;
-  margin: 50px 40px;
-  padding: 20px;
+  margin: 50px auto;
+  background-color: beige ;
+  padding-bottom: 10px;
+}
+.content{
+  margin: 40px;
   
+}
+.question_stat{
+  display: inline-block;
+  
+}
+.question{
+  margin-top: 30px;
+}
+h4{
+  display: flex;
+  justify-content: center;
 }
 .btns{
+  margin-top: 50px;
   display: flex;
-  color: black;
-  width: auto;
-  height: 100%;
-  justify-content: space-between;
+  flex-wrap: wrap; 
+  justify-content: space-around;
+
 }
 .btns button{
-  width: 70% ;
-  
+  width: 35%;
+  margin: 15px;
 }
+.btns button:nth-child(odd){
+  order: 1;
+}
+.answer_btn{
+  background-color: green;
+  color: black;
+}
+
 .nextbtn{
-  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 40px;
+}
+.scores{
+  display: flex;
+  justify-content: space-between;
 }
 

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import Rating from "@material-ui/lab/Rating";
 import QuestionList from "./QuestionList.json";
 import ProgressBar from "./ProgressBar.js";
-import LinearProgress from "@material-ui/core/LinearProgress"
+import TopProgressBar from "./TopProgressBar.js";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import "./App.css";
 
 function App() {
@@ -10,33 +11,35 @@ function App() {
   const [score, setScore] = useState(0);
   const [clicked, setClicked] = useState(false);
   const [rate, setRate] = useState(3);
-  const [res,setRes]=useState("");
-  const [remain,setRemain]=useState(20);
+  const [res, setRes] = useState("");
+  const [remain, setRemain] = useState(20);
+  const [disable,setDisable]=useState(false);
+  const correct_answer=QuestionList[currentquestion].correct_answer;
+  const incorrect_answer=QuestionList[currentquestion].incorrect_answers;
+  const all_answers=[correct_answer,...incorrect_answer]
 
   useEffect(() => {}, [currentquestion]);
 
   const handleCorrectAnswer = isCorrect => {
-    setRemain(remain-1)
+    
+    setRemain(remain - 1);
     if (isCorrect) {
       setScore(score + 1);
       setRes("correct!!");
-    }else{
-      setRes("Sorry");
-    }    
-    setClicked(true);
-  
+    } else {
+      setRes("Sorry!!");
+    }
+    setDisable(true);
   };
 
-
   const handleNextQuestion = () => {
+    
+    setDisable(false);
     setRes("");
-    setClicked(false);
     if (currentquestion < QuestionList.length - 1) {
       setCurrentQuestion(currentquestion + 1);
     }
-    
     rateValue();
-    
   };
 
   // Rating star value
@@ -49,9 +52,27 @@ function App() {
     return rate;
   };
 
-
+  //shuffling the answers 
+  function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
   
- // progress control
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
+
+  // progress control
   const maxval = () => {
     let max = ((score + remain) * 100) / 20;
     return max;
@@ -62,52 +83,57 @@ function App() {
   };
 
   return (
-    <div className="content">
+    <div className="page">
       {/* progressbar */}
-      <LinearProgress variant="determinate" 
-      value={((currentquestion + 1) / (QuestionList.length)) * 100}
-       />
- 
-      <div className="question_stat">
-        <h2>
-          Question {currentquestion + 1} of {QuestionList.length}
-        </h2>
-        <p> {QuestionList[currentquestion].category}</p>
-        {/* rating */}
-        <div>
-          <Rating size="small" name="rating" readOnly value={rate} />
-        </div>
-      </div>
+      <TopProgressBar score={(score / 20) * 100}/>
+      {/* <LinearProgress
+        variant="determinate"
+        value={((currentquestion + 1) / QuestionList.length) * 100}
+      /> */}
+    <div className="content">
+       <div className="question_stat">
+          <h2>
+            Question {currentquestion + 1} of {QuestionList.length}
+          </h2>
+          <p> {QuestionList[currentquestion].category}</p>
+          {/* rating */}
+          <div>
+            <Rating size="small" name="rating" readOnly value={rate} />
+          </div>
+       </div>
       <div className="question">
         <p>{QuestionList[currentquestion].question}</p>
       </div>
 
       <div className="btns">
-        {/* {console.log(QuestionList[currentquestion].correct_answer)} */}
-        {QuestionList[currentquestion].incorrect_answers.map(
-          (answerOption, index) => (
-            <button onClick={() => handleCorrectAnswer(false)} key={index}>
-              {answerOption}
+        {shuffle(all_answers).map(
+          (answerOption) => (
+            <button 
+            disabled={disable} 
+            onClick={() => handleCorrectAnswer(false)} 
+            >
+            {answerOption}
             </button>
           )
         )}
-        <button onClick={() => handleCorrectAnswer(true)}>
-          {QuestionList[currentquestion].correct_answer}
-        </button>
       </div>
 
       <div className="result">
-        <h6>{res}</h6>
+         <h4 style={{ alignSelf: "center" }}>{res}</h4>
       </div>
 
       <div className="nextbtn">
         <button onClick={() => handleNextQuestion()}>Next Question</button>
       </div>
       <div>
-          <h5>Score : {(score/20) * 100}%</h5>
-          <h5 style={{marginLeft: ""}}> Max score: {maxval()}%</h5>
-      <ProgressBar score={(score/20) * 100} min={minval()} max={maxval()}  />
+        <div className='scores'>
+        <h5 className='scr'>Score : {(score / 20) * 100}%</h5>
+        <h5 className='maxsc'> Max score: {maxval()}%</h5>
+        </div>
+       
+        <ProgressBar score={(score / 20) * 100} min={minval()} max={maxval()} />
       </div>
+    </div>
     </div>
   );
 }

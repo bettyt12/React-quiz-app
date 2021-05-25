@@ -22,26 +22,33 @@ code {
   
 }
 .question_stat{
-  display: inline-block;
-  
+  display: flex;
+  flex-direction: column;  
 }
 .question{
   margin-top: 30px;
 }
+h2{
+  margin-bottom: 0;
+  margin-top: 1px;
+} 
 h4{
   display: flex;
   justify-content: center;
 }
+p{
+   margin: 0;
+}
 .btns{
-  margin-top: 50px;
+  margin-top: 50px; 
   display: flex;
   flex-wrap: wrap; 
   justify-content: space-around;
 
   /* display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem; */
-  
+  gap: 1rem;
+  margin-left: 20px ; */
 
 }
 .btns button{
@@ -65,4 +72,7 @@ h4{
 }
 .green{
   background-color: rgb(34, 240, 34);
+}
+.black{
+  background-color: black;
 }

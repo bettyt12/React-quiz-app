@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import Rating from "@material-ui/lab/Rating";
 import QuestionList from "./QuestionList.json";
@@ -6,7 +7,7 @@ import TopProgressBar from "./TopProgressBar.js";
 import "./App.css";
 
 function App() {
-  const [currentquestion, setCurrentQuestion] = useState(19);
+  const [currentquestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [rate, setRate] = useState(3);
   const [res, setRes] = useState("");
@@ -15,14 +16,42 @@ function App() {
   const correct_answer=QuestionList[currentquestion].correct_answer;
   const incorrect_answer=QuestionList[currentquestion].incorrect_answers;
   const all_answers=[correct_answer,...incorrect_answer];
+  const [next,setNext]=useState(0);
+  const [all,setAll]=useState([])
   const [end,setEnd]=useState(false);
   const btn=document.getElementsByClassName('btn');
+  let x=[];
   
 
   useEffect(() => {}, [currentquestion]);
-
-  const handleCorrectAnswer = (answerOption) => {
+ 
+    const Shuffle= () =>  {
+      useEffect(() => {
+      var currentIndex = all_answers.length, temporaryValue, randomIndex;
     
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+    
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+    
+        // And swap it with the current element.
+        temporaryValue = all_answers[currentIndex];
+        all_answers[currentIndex] = all_answers[randomIndex];
+        all_answers[randomIndex] = temporaryValue;
+      }
+      setAll(all_answers);
+    }, [next]);
+   
+    return all;
+    }
+ 
+ 
+   x=Shuffle();
+console.log(x);
+  const handleCorrectAnswer = (answerOption) => {
+ ///   btn.setAttribute("disabled",false)
     setRemain(remain - 1);
     if (answerOption===correct_answer) {
       setRes("correct!!");
@@ -36,14 +65,13 @@ function App() {
 
   
   const handleNextQuestion = () => {
-   
-    
-    
+  
     if (currentquestion < QuestionList.length - 1) {
       setCurrentQuestion(currentquestion + 1);  
       rateValue();
       setDisable(false);
       setRes("");
+      setNext(next+1)
     }else if(currentquestion>=QuestionList.length){
 
       setEnd(true);
@@ -64,25 +92,27 @@ function App() {
   };
 
   //shuffling the answers 
-  function shuffle() {
-    var currentIndex = all_answers.length, temporaryValue, randomIndex;
+//  const shuffle=()=> {
+//     var currentIndex = all_answers.length, temporaryValue, randomIndex;
   
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
+//     // While there remain elements to shuffle...
+//     while (0 !== currentIndex) {
   
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
+//       // Pick a remaining element...
+//       randomIndex = Math.floor(Math.random() * currentIndex);
+//       currentIndex -= 1;
   
-      // And swap it with the current element.
-      temporaryValue = all_answers[currentIndex];
-      all_answers[currentIndex] = all_answers[randomIndex];
-      all_answers[randomIndex] = temporaryValue;
-    }
+//       // And swap it with the current element.
+//       temporaryValue = all_answers[currentIndex];
+//       all_answers[currentIndex] = all_answers[randomIndex];
+//       all_answers[randomIndex] = temporaryValue;
+//     }
   
-    return all_answers;
-  }
-  
+//     return all_answers;
+//   }
+
+ 
+
 
   // progress control
   const maxval = () => {
@@ -99,6 +129,7 @@ function App() {
     for (let i = 0; i< btn.length; i++) {
      if(btn[i].innerHTML===(correct_answer)){
        btn[i].classList.add('green');
+       btn[i].setAttribute("disabled",false);
      }}
      };
   const remvAns=()=>{
@@ -127,14 +158,13 @@ function App() {
       </div>
 
       <div className="btns">
-        {all_answers.map(
+        {x.map(
           (answerOption,index) => (
             <button 
-             className='btn'
+            className='btn'
             disabled={disable} 
             key={index}
             onClick={() => handleCorrectAnswer(answerOption)} 
-            
             >
             {answerOption}
             </button>

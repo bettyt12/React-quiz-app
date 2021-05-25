@@ -12,8 +12,10 @@ const ProgressBar = ({score,min,max}) => {
       display: "flex",
       flexDirection: "row",
       border: "2px black solid",
-      height: "fit-content"
-        
+      height: "fit-content",
+      position: 'relative'  ,
+      marginLeft: 'auto',
+      marginRight: 'auto',
       }}>
 
             <div style={{
@@ -21,6 +23,8 @@ const ProgressBar = ({score,min,max}) => {
               height: '20px',
               backgroundColor: 'black',
               width: `${min}%`,
+              display:'inline-block',
+               
               }}>
             </div>
 
@@ -29,7 +33,7 @@ const ProgressBar = ({score,min,max}) => {
               height: '20px',
               backgroundColor: 'grey',
               width: `${score}%`,
-              
+             
               }}>
             </div>
             
@@ -37,10 +41,41 @@ const ProgressBar = ({score,min,max}) => {
               
               height: '20px',
               backgroundColor: '#d1d1c7',
-              width: `${max}%`}}> 
+              width: `${max}%`,
+             
+            }}
+              > 
             </div>
     </div>
   );
 };
 
 export default ProgressBar;
+// .boxwrap{
+//   marginLeft: 'auto',
+//   marginRight: 'auto',
+//   top: 50px;
+// }
+
+// .box{
+//   width: 100px;
+//   height: 100px;
+// }
+
+// #box1{
+//   margin-left: -100px;
+//   background-color: red;
+// display:inline-block
+// }
+
+// #box2{
+//   margin-top: -50px;
+//   margin-bottom: -50px;
+//   margin-left: 0px;
+//   background-color: black;
+// }
+
+// #box3{
+//   margin-left: 100px;
+//   background-color: green;
+// }
